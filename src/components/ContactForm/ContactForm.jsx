@@ -4,9 +4,9 @@ import { nanoid } from 'nanoid';
 
 export class Form extends Component {
   state = {
+    id: nanoid(),
     name: '',
-    number: '',
-    id: '',
+    number: '',   
   };
 
   handleInput = inputName => e => {
@@ -16,9 +16,10 @@ export class Form extends Component {
   };
 
   handleSubmit = event => {
-    const { name, number } = this.state;
+    const { id,name, number } = this.state;
     event.preventDefault();
-    this.props.onSubmit({ name, number, id: nanoid() });
+    this.props.onSubmit({ id, name, number });
+    localStorage.setItem('contacts',JSON.stringify(this.state));
     this.reset();
   };
 
