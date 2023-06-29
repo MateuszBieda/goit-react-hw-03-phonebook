@@ -4,7 +4,6 @@ import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactsList/ContactsList.jsx';
 
 export class App extends Component {
-
   state = {
     contacts: [
       { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -22,7 +21,6 @@ export class App extends Component {
   // };
 
   deleteContact = contactId => {
-   
     this.setState(prevState => {
       return {
         contacts: prevState.contacts.filter(
@@ -30,8 +28,8 @@ export class App extends Component {
         ),
       };
     });
-    const {contacts} = this.props;
-    localStorage.setItem('contacts',JSON.stringify(contacts));
+    const { contacts } = this.props;
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   };
 
   newContactAudit = newContact => {
@@ -41,7 +39,6 @@ export class App extends Component {
   };
 
   contactFormSubmitHandler = newContact => {
-  
     if (this.newContactAudit(newContact).length > 0) {
       alert(`${newContact.name} is already in contacts.`);
       return false;
@@ -49,9 +46,8 @@ export class App extends Component {
       this.setState(prevState => ({
         contacts: [...prevState.contacts, newContact],
       }));
-      return true;     
+      return true;
     }
-    
   };
 
   contactFilter = event => {
@@ -59,16 +55,19 @@ export class App extends Component {
   };
 
   componentDidMount() {
-    const contacts = localStorage.getItem('contacts')
-    const parsedContacts = JSON.parse(contacts)
-    this.setState(() => ({ parsedContacts }))
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState(() => ({ parsedContacts }));
+    }
   }
 
-  componentDidUpdate(prevProps, prevStates){
-    const contacts = JSON.stringify(this.state.contacts)
-    localStorage.setItem('contacts', contacts)
+  componentDidUpdate(prevProps, prevState) {
+    const contacts = JSON.stringify(this.state.contacts);
+    if(this.state.contacts!==prevState.contacts){
+    localStorage.setItem('contacts', contacts);
   }
-
+  }
 
   render() {
     const { contacts, filter } = this.state;

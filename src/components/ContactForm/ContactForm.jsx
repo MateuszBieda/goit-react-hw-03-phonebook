@@ -24,7 +24,7 @@ export class Form extends Component {
   };
 
   reset = () => {
-    this.setState({ name: '', number: '' });
+    this.setState({ name: '', number: '', id: nanoid() });
   };
 
   render() {
